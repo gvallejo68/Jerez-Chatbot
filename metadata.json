@@ -1,0 +1,7 @@
+{
+  "name": "Jerez Explore & SOS",
+  "description": "An intelligent tourist assistant for Jerez de la Frontera featuring specialized agents for tourism and emergency assistance.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
