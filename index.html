@@ -11,25 +11,13 @@
                 extend: {
                     colors: {
                         sherry: {
-                            50: '#fdf3f2',
-                            100: '#fbe6e5',
-                            200: '#f6ced0',
-                            300: '#eeabba',
-                            400: '#e37d8e',
-                            500: '#d55064',
-                            600: '#bf3d45',
-                            700: '#aa0538',
-                            800: '#862232',
-                            900: '#72202e',
+                            50: '#fdf3f2', 100: '#fbe6e5', 200: '#f6ced0',
+                            300: '#eeabba', 400: '#e37d8e', 500: '#d55064',
+                            600: '#bf3d45', 700: '#aa0538', 800: '#862232', 900: '#72202e',
                         },
                         albero: {
-                            50: '#fefce8',
-                            100: '#fef9c3',
-                            200: '#fef08a',
-                            300: '#fde047',
-                            400: '#facc15',
-                            500: '#eab308',
-                            600: '#ca8a04',
+                            50: '#fefce8', 100: '#fef9c3', 200: '#fef08a',
+                            300: '#fde047', 400: '#facc15', 500: '#eab308', 600: '#ca8a04',
                         },
                     },
                 },
@@ -37,59 +25,203 @@
         };
     </script>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased h-screen overflow-hidden">
-    <div id="root" class="h-full"></div>
+<body class="bg-gradient-to-br from-sherry-50 to-sherry-100 text-gray-800 antialiased h-screen overflow-hidden">
+    <div id="root" class="h-full flex flex-col"></div>
     
     <script>
-        // Aplicación sin React - Vanilla JavaScript
-        const root = document.getElementById('root');
-        
-        root.innerHTML = `
-            <div class="min-h-screen bg-gradient-to-br from-sherry-50 to-sherry-100 flex items-center justify-center p-4">
-                <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
-                    <div class="bg-gradient-to-r from-sherry-600 to-sherry-700 p-8 text-white text-center">
-                        <h1 class="text-4xl font-bold mb-2">Jerez Explore & SOS</h1>
-                        <p class="text-sherry-100">Tu guía de Jerez de la Frontera</p>
+        // Base de conocimientos sobre Jerez
+        const knowledge = {
+            turismo: [
+                "El Alcázar de Jerez es una fortificación almohade del siglo XII con hermosos jardines y baños árabes.",
+                "La Catedral de Jerez combina estilos gótico, barroco y neoclásico. Su torre campanario ofrece vistas panorámicas.",
+                "Las Bodegas Tio Pepe ofrecen visitas guiadas donde puedes aprender sobre la elaboración del vino de Jerez.",
+                "La Real Escuela Andaluza del Arte Ecuestre presenta espectáculos ecuestres todos los jueves."
+            ],
+            gastronomia: [
+                "El vino de Jerez incluye variedades como Fino, Manzanilla, Amontillado, Oloroso y Pedro Ximénez.",
+                "Platos típicos: rabo de toro, berza jerezana, riñones al jerez, y pescado frito.",
+                "Zona de tapas recomendada: calle Larga, plaza del Arenal y calle Francos."
+            ],
+            flamenco: [
+                "Jerez es cuna del flamenco y celebra el Festival de Jerez en febrero-marzo.",
+                "Tabancos recomendados: El Pasaje, Las Banderillas, y Plateros.",
+                "Peñas flamencas: Peña La Buleria y Centro Cultural Flamenco Don Antonio Chacón."
+            ],
+            emergencias: {
+                policia: "091",
+                bomberos: "080",
+                emergencias: "112",
+                hospital: "Hospital Universitario de Jerez: 956 03 20 00"
+            }
+        };
+
+        let chatMessages = [];
+
+        function initApp() {
+            const root = document.getElementById('root');
+            root.innerHTML = `
+                <div class="h-full flex flex-col">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-sherry-600 to-sherry-700 p-6 text-white text-center shadow-lg">
+                        <h1 class="text-3xl font-bold">🍷 Jerez Explore & SOS</h1>
+                        <p class="text-sherry-100">Tu asistente virtual de Jerez de la Frontera</p>
                     </div>
-                    <div class="p-8">
-                        <div class="space-y-6">
-                            <div class="bg-gradient-to-br from-albero-50 to-albero-100 p-6 rounded-xl border-2 border-albero-300">
-                                <h2 class="text-2xl font-semibold text-sherry-700 mb-4">🍷 Bienvenido a Jerez</h2>
-                                <p class="text-gray-700 leading-relaxed">
-                                    Descubre la ciudad del vino, los caballos y el flamenco. 
-                                    Esta aplicación te ayudará a explorar los mejores lugares de Jerez.
-                                </p>
-                            </div>
-                            
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                    <h3 class="font-semibold text-blue-900 mb-2">🏛️ Lugares Turísticos</h3>
-                                    <p class="text-sm text-gray-600">Alcázar, Catedral, Bodegas...</p>
+
+                    <!-- Chat Container -->
+                    <div class="flex-1 overflow-hidden flex flex-col bg-white m-4 rounded-xl shadow-2xl">
+                        <!-- Messages Area -->
+                        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3">
+                            <div class="flex items-start space-x-2">
+                                <div class="w-8 h-8 bg-sherry-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                                    J
                                 </div>
-                                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                                    <h3 class="font-semibold text-green-900 mb-2">🍴 Gastronomía</h3>
-                                    <p class="text-sm text-gray-600">Tapas, vinos de Jerez...</p>
-                                </div>
-                                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                    <h3 class="font-semibold text-purple-900 mb-2">🎶 Flamenco</h3>
-                                    <p class="text-sm text-gray-600">Peñas, tabancos, espectáculos...</p>
-                                </div>
-                                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
-                                    <h3 class="font-semibold text-red-900 mb-2">🛑 Emergencias (SOS)</h3>
-                                    <p class="text-sm text-gray-600">Números de contacto útiles...</p>
+                                <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
+                                    <p class="text-sm">¡Hola! Soy tu asistente de Jerez. Puedo ayudarte con información sobre turismo, gastronomía, flamenco y números de emergencia. ¿En qué puedo ayudarte?</p>
                                 </div>
                             </div>
-                            
-                            <div class="text-center mt-6">
-                                <p class="text-gray-500 text-sm">
-                                    Aplicación en desarrollo • Versión 1.0
-                                </p>
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="border-t p-4 bg-gray-50">
+                            <div class="flex space-x-2">
+                                <input 
+                                    type="text" 
+                                    id="userInput" 
+                                    placeholder="Escribe tu pregunta sobre Jerez..."
+                                    class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-sherry-500"
+                                    onkeypress="if(event.key==='Enter') sendMessage()"
+                                />
+                                <button 
+                                    onclick="sendMessage()" 
+                                    class="bg-sherry-600 hover:bg-sherry-700 text-white px-6 py-3 rounded-full font-semibold transition-colors"
+                                >
+                                    Enviar
+                                </button>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Quick Actions -->
+                    <div class="px-4 pb-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <button onclick="sendQuickMessage('turismo')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg text-xs font-semibold transition-colors">
+                                🏛️ Turismo
+                            </button>
+                            <button onclick="sendQuickMessage('gastronomía')" class="bg-green-100 hover:bg-green-200 text-green-900 p-2 rounded-lg text-xs font-semibold transition-colors">
+                                🍴 Gastronomía
+                            </button>
+                            <button onclick="sendQuickMessage('flamenco')" class="bg-purple-100 hover:bg-purple-200 text-purple-900 p-2 rounded-lg text-xs font-semibold transition-colors">
+                                🎶 Flamenco
+                            </button>
+                            <button onclick="sendQuickMessage('emergencias')" class="bg-red-100 hover:bg-red-200 text-red-900 p-2 rounded-lg text-xs font-semibold transition-colors">
+                                🛑 Emergencias
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addUserMessage(message);
+            input.value = '';
+
+            // Simular respuesta del bot
+            setTimeout(() => {
+                const response = generateResponse(message);
+                addBotMessage(response);
+            }, 500);
+        }
+
+        function sendQuickMessage(topic) {
+            const input = document.getElementById('userInput');
+            input.value = `Cuéntame sobre ${topic} en Jerez`;
+            sendMessage();
+        }
+
+        function addUserMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageHtml = `
+                <div class="flex items-start space-x-2 justify-end">
+                    <div class="bg-sherry-600 text-white rounded-2xl rounded-tr-none p-3 max-w-xs">
+                        <p class="text-sm">${escapeHtml(text)}</p>
+                    </div>
+                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                        Tú
+                    </div>
+                </div>
+            `;
+            messagesDiv.insertAdjacentHTML('beforeend', messageHtml);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function addBotMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageHtml = `
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-sherry-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                        J
+                    </div>
+                    <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
+                        <p class="text-sm">${text}</p>
+                    </div>
+                </div>
+            `;
+            messagesDiv.insertAdjacentHTML('beforeend', messageHtml);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function generateResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            // Emergencias
+            if (lowerMsg.includes('emergencia') || lowerMsg.includes('urgencia') || lowerMsg.includes('ayuda') || lowerMsg.includes('policía') || lowerMsg.includes('hospital')) {
+                return `🛑 Números de emergencia en Jerez:<br><br>
+                        • Emergencias: <b>112</b><br>
+                        • Policía: <b>091</b><br>
+                        • Bomberos: <b>080</b><br>
+                        • Hospital Universitario: <b>956 03 20 00</b>`;
+            }
+            
+            // Turismo
+            if (lowerMsg.includes('turismo') || lowerMsg.includes('visitar') || lowerMsg.includes('lugares') || lowerMsg.includes('alcázar') || lowerMsg.includes('catedral')) {
+                const randomInfo = knowledge.turismo[Math.floor(Math.random() * knowledge.turismo.length)];
+                return `🏛️ ${randomInfo}<br><br>Otros lugares de interés: Alcázar, Catedral, Real Escuela Ecuestre, Bodegas históricas y el barrio de Santiago.`;
+            }
+            
+            // Gastronomía
+            if (lowerMsg.includes('comer') || lowerMsg.includes('gastronomia') || lowerMsg.includes('gastronomía') || lowerMsg.includes('tapas') || lowerMsg.includes('vino') || lowerMsg.includes('restaurante')) {
+                const randomInfo = knowledge.gastronomia[Math.floor(Math.random() * knowledge.gastronomia.length)];
+                return `🍴 ${randomInfo}<br><br>Te recomiendo visitar la zona de tapas en calle Larga y plaza del Arenal.`;
+            }
+            
+            // Flamenco
+            if (lowerMsg.includes('flamenco') || lowerMsg.includes('tabanco') || lowerMsg.includes('peña')) {
+                const randomInfo = knowledge.flamenco[Math.floor(Math.random() * knowledge.flamenco.length)];
+                return `🎶 ${randomInfo}<br><br>No te pierdas el Festival de Jerez si visitas en febrero o marzo.`;
+            }
+            
+            // Respuesta por defecto
+            return `Puedo ayudarte con información sobre:<br><br>
+                    🏛️ Turismo y lugares de interés<br>
+                    🍴 Gastronomía y vinos<br>
+                    🎶 Flamenco y cultura<br>
+                    🛑 Números de emergencia<br><br>
+                    ¿Sobre qué te gustaría saber?`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Inicializar app
+        initApp();
     </script>
 </body>
 </html>
