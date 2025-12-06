@@ -80,4 +80,39 @@
   <body class="bg-gray-50 text-gray-800 antialiased h-screen overflow-hidden">
     <div id="root" class="h-full"></div>
   </body>
+  <script type="module">
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    
+    function App() {
+      return React.createElement('div', {
+        className: 'min-h-screen bg-gradient-to-br from-sherry-50 to-sherry-100 flex items-center justify-center p-4'
+      }, 
+        React.createElement('div', {
+          className: 'max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden'
+        },
+          React.createElement('div', {
+            className: 'bg-gradient-to-r from-sherry-600 to-sherry-700 p-8 text-white text-center'
+          },
+            React.createElement('h1', {
+              className: 'text-4xl font-bold mb-2'
+            }, 'Jerez Explore & SOS'),
+            React.createElement('p', {
+              className: 'text-sherry-100'
+            }, 'Tu guía de Jerez de la Frontera')
+          ),
+          React.createElement('div', {
+            className: 'p-8'
+          },
+            React.createElement('p', {
+              className: 'text-gray-700 text-lg text-center'
+            }, '¡Bienvenido! La aplicación se está cargando...')
+          )
+        )
+      );
+    }
+    
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+  </script>
 </html>
