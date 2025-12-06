@@ -1,118 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jerez Explore & SOS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              sherry: {
-                50: '#fdf3f2',
-                100: '#fbe6e5',
-                200: '#f6ced0',
-                300: '#eeabba',
-                400: '#e37d8e',
-                500: '#d55064',
-                600: '#bf3449',
-                700: '#a02538', // Deep sherry red
-                800: '#862232',
-                900: '#72202e',
-              },
-              albero: {
-                50: '#fefce8',
-                100: '#fef9c3',
-                200: '#fef08a',
-                300: '#fde047',
-                400: '#facc15',
-                500: '#eab308', // Bullring sand yellow
-                600: '#ca8a04',
-                700: '#a16207',
-                800: '#854d0e',
-                900: '#713f12',
-              }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sherry: {
+                            50: '#fdf3f2',
+                            100: '#fbe6e5',
+                            200: '#f6ced0',
+                            300: '#eeabba',
+                            400: '#e37d8e',
+                            500: '#d55064',
+                            600: '#bf3d45',
+                            700: '#aa0538',
+                            800: '#862232',
+                            900: '#72202e',
+                        },
+                        albero: {
+                            50: '#fefce8',
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        },
+                    },
+                },
             },
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-            },
-          },
-        },
-      }
+        };
     </script>
-    <style>
-      /* Custom scrollbar for webkit */
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 3px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-      }
-      .animate-fade-in {
-        animation: fadeIn 0.3s ease-out forwards;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/"
-  }
-}
-</script>
 </head>
-  <body class="bg-gray-50 text-gray-800 antialiased h-screen overflow-hidden">
+<body class="bg-gray-50 text-gray-800 antialiased h-screen overflow-hidden">
     <div id="root" class="h-full"></div>
-  </body>
-  <script type="module">
-    import React from 'react';
-    import ReactDOM from 'react-dom';
     
-    function App() {
-      return React.createElement('div', {
-        className: 'min-h-screen bg-gradient-to-br from-sherry-50 to-sherry-100 flex items-center justify-center p-4'
-      }, 
-        React.createElement('div', {
-          className: 'max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden'
-        },
-          React.createElement('div', {
-            className: 'bg-gradient-to-r from-sherry-600 to-sherry-700 p-8 text-white text-center'
-          },
-            React.createElement('h1', {
-              className: 'text-4xl font-bold mb-2'
-            }, 'Jerez Explore & SOS'),
-            React.createElement('p', {
-              className: 'text-sherry-100'
-            }, 'Tu guía de Jerez de la Frontera')
-          ),
-          React.createElement('div', {
-            className: 'p-8'
-          },
-            React.createElement('p', {
-              className: 'text-gray-700 text-lg text-center'
-            }, '¡Bienvenido! La aplicación se está cargando...')
-          )
-        )
-      );
-    }
-    
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(App));
-  </script>
+    <script>
+        // Aplicación sin React - Vanilla JavaScript
+        const root = document.getElementById('root');
+        
+        root.innerHTML = `
+            <div class="min-h-screen bg-gradient-to-br from-sherry-50 to-sherry-100 flex items-center justify-center p-4">
+                <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-sherry-600 to-sherry-700 p-8 text-white text-center">
+                        <h1 class="text-4xl font-bold mb-2">Jerez Explore & SOS</h1>
+                        <p class="text-sherry-100">Tu guía de Jerez de la Frontera</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-br from-albero-50 to-albero-100 p-6 rounded-xl border-2 border-albero-300">
+                                <h2 class="text-2xl font-semibold text-sherry-700 mb-4">🍷 Bienvenido a Jerez</h2>
+                                <p class="text-gray-700 leading-relaxed">
+                                    Descubre la ciudad del vino, los caballos y el flamenco. 
+                                    Esta aplicación te ayudará a explorar los mejores lugares de Jerez.
+                                </p>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                    <h3 class="font-semibold text-blue-900 mb-2">🏛️ Lugares Turísticos</h3>
+                                    <p class="text-sm text-gray-600">Alcázar, Catedral, Bodegas...</p>
+                                </div>
+                                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                                    <h3 class="font-semibold text-green-900 mb-2">🍴 Gastronomía</h3>
+                                    <p class="text-sm text-gray-600">Tapas, vinos de Jerez...</p>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                                    <h3 class="font-semibold text-purple-900 mb-2">🎶 Flamenco</h3>
+                                    <p class="text-sm text-gray-600">Peñas, tabancos, espectáculos...</p>
+                                </div>
+                                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                                    <h3 class="font-semibold text-red-900 mb-2">🛑 Emergencias (SOS)</h3>
+                                    <p class="text-sm text-gray-600">Números de contacto útiles...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-6">
+                                <p class="text-gray-500 text-sm">
+                                    Aplicación en desarrollo • Versión 1.0
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    </script>
+</body>
 </html>
